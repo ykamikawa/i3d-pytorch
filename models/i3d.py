@@ -1,6 +1,6 @@
 import torch
 
-from model.layers import Unit3Dpy, Mixed, MaxPool3dTFPadding
+from models.layers import Unit3Dpy, Mixed, MaxPool3dTFPadding
 
 
 class I3D(torch.nn.Module):
@@ -107,3 +107,30 @@ class I3D(torch.nn.Module):
         out_logits = out
         out = self.softmax(out_logits)
         return out, out_logits
+
+
+def get_fine_tuning_parameters(model, ft_begin_index):
+    if ft_begin_index == 0:
+        print('Fine tune all parameters')
+        return model.parameters()
+
+    ft_module_names = []
+    for i in range(ft_begin_index, 5):
+        ft_module_names.append('mixed_{}'.format(i))
+    ft_module_names.append('dropout')
+    ft_module_names.append('conv3d_0c_1x1')
+
+    parameters = []
+    target_names = []
+    for k, v in model.named_parameters():
+        for ft_module in ft_module_names:
+            if ft_module in k:
+                parameters.append({'params': v})
+                target_names.append(k)
+                break
+            else:
+                v.requires_grad = False
+                parameters.append({'params': v, 'lr': 0.0})
+    print('FIne tune: ', target_names)
+
+    return parameters
