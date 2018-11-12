@@ -8,6 +8,7 @@ def generate_model(args):
     model = I3D(num_classes=400, modality=args.modality)
 
     if args.pretrain_path:
+        print('loading pretrained model {}'.format(args.pretrain_path))
         model.load_state_dict(torch.load(args.pretrain_path))
 
     model.conv3d_0c_1x1 = Unit3Dpy(
