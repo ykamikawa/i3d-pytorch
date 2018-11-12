@@ -117,7 +117,6 @@ def get_fine_tuning_parameters(model, ft_begin_index):
     ft_module_names = []
     for i in range(ft_begin_index, 5):
         ft_module_names.append('mixed_{}'.format(i))
-    ft_module_names.append('dropout')
     ft_module_names.append('conv3d_0c_1x1')
 
     parameters = []
