@@ -80,7 +80,7 @@ def argparser():
     # Trained parameters
     parser.add_argument('--pretrain_path', default='pretrained/rgb.pth', type=str,
             help='Pretrained model (.pth)')
-    parser.add_argument('--ft_begin_index', default=0, type=int,
+    parser.add_argument('--ft_begin_index', default=6, type=int,
             help='Begin block index of fine-tuning')
     parser.add_argument('--resume_path', default='', type=str,
             help='Save data (.pth) of previous training')
