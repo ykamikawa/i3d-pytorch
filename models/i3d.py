@@ -127,9 +127,9 @@ def get_fine_tuning_parameters(model, ft_begin_index):
                 parameters.append({'params': v})
                 target_names.append(k)
                 break
-            else:
-                v.requires_grad = False
-                parameters.append({'params': v, 'lr': 0.0})
-    print('FIne tune: ', target_names)
+        else:
+            v.requires_grad = False
+            parameters.append({'params': v, 'lr': 0.0})
+    print('Fine tune: ', target_names)
 
     return parameters
